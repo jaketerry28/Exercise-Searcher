@@ -12,7 +12,7 @@ Jake Terry, CS 121
 Many open-source exercise databases are in JSON format. The goal of this project is to convert JSON files into object instances, then store these objects in a data structure, such as an ArrayList. ArrayList will work well because we will not need to dynamically resize the ArrayList, I am not focused on adding elements to the ArrayList just yet. If progress permit, I may consider a different more dynamic data structure for users to add custom exercises. For now, an ArrayList will work to solve the main problem of this project -- converting JSON to objects, then presenting this information in a readable format.
 
 ## UML
-<img src="FitSearchUML.png" alt="UML" width="400" height="600">
+<img src="images/FitSearchUML.png" alt="UML" width="400" height="600">
 
 ## Open-Source Exercise DataBase
 
@@ -107,10 +107,10 @@ If possible, I'd want to present this information through a GUI. The ExerciseGui
 Load the GUI and have pages users can cycle through to explore data. Have an interactable button that when clicked, will give more detailed information about that specific exercise.
 
 Preferably, the GUI will be set up like this:  
-<img src="DisplayIdea.png" alt="UML" width="600" height="400">  
+<img src="images/DisplayIdea.png" alt="UML" width="600" height="400">  
 
 If a user clicks on the button or name, use the Exercise class getter to grab the image String and call the URL through the link described above:
-<img src="DetailedGUI.png" alt="UML" width="600" height="400"> 
+<img src="images/DetailedGUI.png" alt="UML" width="600" height="400"> 
 
 
 ## Milestones
