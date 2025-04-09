@@ -1,10 +1,11 @@
 //Exercise.java
 
 import java.util.*;
+import java.net.URL;
 
 public class Exercise{
     // Instance variables
-    private String ID;
+    private String id;
     private String name;
     private String force;
     private String level;
@@ -24,7 +25,7 @@ public class Exercise{
     // Constructor
     public Exercise(){
         // Initialize instance variables
-        ID = "";
+        id = "";
         name = "";
         force = "";
         level = "";
@@ -39,10 +40,10 @@ public class Exercise{
 
     // Getters and Setters
     public String getID() {
-        return ID;
+        return id;
     }
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID(String id) {
+        this.id = id;
     }
     public String getName() {
         return name;
@@ -107,7 +108,7 @@ public class Exercise{
 
     // Method to display exercise information
     public void displayExerciseInfo() {
-        System.out.println("\nID: " + ID);
+        System.out.println("\nID: " + id);
         System.out.println("\nName: " + name);
         System.out.println("\nForce: " + force);
         System.out.println("\nLevel: " + level);
@@ -119,4 +120,18 @@ public class Exercise{
         System.out.println("\nInstructions: " + instructions);
         System.out.println("\nImages: " + images);
     } // end displayExerciseInfo
+
+    // Show images
+    public void showImages() {
+        String baseURL = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/refs/heads/main/exercises/";
+        for (String imageUrl : images) {
+            try {
+                URL url = new URL(baseURL + imageUrl);
+                // Here you can add code to display the image using a GUI library
+                System.out.println("Image URL: " + url);
+            } catch (Exception e) {
+                System.out.println("Error loading image: " + e.getMessage());
+            } // end try-catch
+        } // end for
+    } // end showImages
 } // end class

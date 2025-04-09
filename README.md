@@ -57,7 +57,7 @@ Using the JSON Schema, the Exercise class will have these attributes and methods
 ```
 public Class Exercise()
 ====================
-String ID
+String id
 String name
 String force
 String level
@@ -94,9 +94,33 @@ In order to implement the parser I will need these libraries:
 
 * java.NET.* - gives me access to the URL class
 * java.util.* - For the List interface
-* java.io.* - for streams
+* java.io.* - for InputStreamReader 
 * com.google.gson.* - using Googles JSON to Object convereter.
+* com.google.gson.reflect.TypeToken - for the TypeToken class
+* java.lang.reflect.Type - for the Type class
 
+
+### Installing GSON Libraries
+GSON is not native to Java so I will have to download the [jar](https://repo1.maven.org/maven2/com/google/code/gson/gson/2.10.1/) file and give the compiler special instructions: ```- cp ".:libraries/gson-2.10.1.jar"```. This means use the code in the current directory and the GSON library in the libraries folder.
+
+```
+javac -cp ".:libraries/gson-2.10.1.jar" ....
+java -cp ".:libraries/gson-2.10.1.jar" ....
+```
+
+### GSON Methods
+
+Gson class contains a method ```.fromJson(input, type)```. This converts the JSON into an object of "type". Since we want to store the JSON strings into an ArrayList it is necessary to define the type before hand. Java needs a way to represent generic types, therefore we use do this:
+
+```
+Type exerciseList = new TypeToken<ArrayList<Exercise>>(){}.getType();
+```
+
+Gson provides ```TypeToken``` as a class for this situation. Gson docs state you do this by creating an empty anonymous class. 
+
+```.getType()``` returns the ```ArrayList<Exercise>``` as a type object.
+
+ 
 
 ## ExerciseGUI
 
