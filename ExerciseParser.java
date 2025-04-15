@@ -25,11 +25,24 @@ public class ExerciseParser{
         
         if (loadedExercises != null) {
             System.out.println("\nLoaded Exercises: ");
+            /*
+            loadedExercises.get(0).getID();
+            loadedExercises.get(0).getName();
+            loadedExercises.get(0).getForce();
+            loadedExercises.get(0).getLevel();
+            loadedExercises.get(0).getMechanic();
+            loadedExercises.get(0).getEquipment();
+            loadedExercises.get(0).getCategory();
+            loadedExercises.get(0).getPrimaryMuscles();
+            loadedExercises.get(0).getSecondaryMuscles();
+            loadedExercises.get(0).getInstructions();
+            
             // Print the names of the loaded exercises
             for (Exercise c : loadedExercises){
                 //c.displayExerciseInfo();
                 System.out.println(c.getName());
             } // end for
+            */
         } else {
             System.out.println("Failed to load exercises");
         } // end if
