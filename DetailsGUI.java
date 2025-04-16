@@ -9,8 +9,8 @@ public class DetailsGUI extends JFrame {
      
     public DetailsGUI(Exercise exercise) {
          
-        setTitle("Box Layout Example");
-        setSize(600, 400);
+        setTitle("Exercise Details");
+        setSize(800, 600);
         Container pnlMain = this.getContentPane(); 
         
         pnlMain.setLayout(new BorderLayout());
@@ -40,15 +40,36 @@ public class DetailsGUI extends JFrame {
         // Add the labels to the data panel
         pnlData.add(txtData);
 
+        // Create a scroll pane for the data panel
+        JScrollPane dataScrollPane = new JScrollPane(pnlData);
+        dataScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        dataScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        dataScrollPane.getVerticalScrollBar().setUnitIncrement(8);
+        dataScrollPane.getHorizontalScrollBar().setUnitIncrement(8);
+
+
         // Create labels for the images
         JLabel img1Lbl = new JLabel();
         JLabel img2Lbl = new JLabel();
 
+        // Create a label for the arrow
+        JLabel arrowLbl = new JLabel(new ImageIcon("images/arrow.png"));
+        //JLabel arrowLbl = new JLabel("->", SwingConstants.CENTER);
+
         try {
+            // Load images from URLs
             URL img1URL = new URL("https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/" + exercise.getImages().get(0));
             URL img2URL = new URL("https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/" + exercise.getImages().get(1));
-            ImageIcon img1 = new ImageIcon(img1URL);
-            ImageIcon img2 = new ImageIcon(img2URL);
+            ImageIcon origImg1 = new ImageIcon(img1URL);
+            ImageIcon origImg2 = new ImageIcon(img2URL);
+
+            // Resize images to fit the labels
+            Image scaledImg1 = origImg1.getImage().getScaledInstance(800, 400, Image.SCALE_SMOOTH);
+            Image scaledImg2 = origImg2.getImage().getScaledInstance(800, 400, Image.SCALE_SMOOTH);
+            ImageIcon img1 = new ImageIcon(scaledImg1);
+            ImageIcon img2 = new ImageIcon(scaledImg2);
+            
+            // Set the icons to the labels
             img1Lbl.setIcon(img1);
             img2Lbl.setIcon(img2);
 
@@ -58,32 +79,28 @@ public class DetailsGUI extends JFrame {
 
         // Create a panel for the images
         JPanel pnlImg = new JPanel();
-        pnlImg.setLayout(new BoxLayout(pnlImg, BoxLayout.PAGE_AXIS));
-        pnlImg.setBorder(BorderFactory.createTitledBorder("Images"));
+        pnlImg.setLayout(new BoxLayout(pnlImg, BoxLayout.LINE_AXIS));
+        pnlImg.setBorder(BorderFactory.createTitledBorder("Example Images"));
         pnlImg.add(img1Lbl);
+        pnlImg.add(Box.createVerticalStrut(5));
+        pnlImg.add(arrowLbl);
         pnlImg.add(Box.createVerticalStrut(5));
         pnlImg.add(img2Lbl);
 
-        JScrollPane imgScrollPane = new JScrollPane(pnlImg);
-        imgScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        imgScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        imgScrollPane.getVerticalScrollBar().setUnitIncrement(8);
-        imgScrollPane.getHorizontalScrollBar().setUnitIncrement(8);
-        
-        
         // Create a split pane to hold the data and images
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlData, imgScrollPane);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, dataScrollPane, pnlImg);
         
         // Set minimum size for both components in the split pane
         pnlData.setMinimumSize(new Dimension(150, 0));  // Minimum width for pnlData
-        imgScrollPane.setMinimumSize(new Dimension(150, 0));  // Minimum width for imgScrollPane
-        splitPane.setDividerLocation(400); // Set initial divider location
+        dataScrollPane.setMinimumSize(new Dimension(150, 0));  // Minimum width for dataScrollPane
         
         // Add the split pane to the main panel
         pnlMain.add(splitPane, BorderLayout.CENTER);
+        splitPane.setDividerLocation(800); // Set initial divider location
         
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
+;
     } // end constructor
     
 } // end class def

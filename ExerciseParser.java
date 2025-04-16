@@ -13,41 +13,6 @@ public class ExerciseParser{
     // URL of the JSON file
     private static final String exampleURL = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/refs/heads/main/dist/exercises.json";
 
-
-    public static void main(String[] args) {
-
-        // Create an instance of ExerciseParser
-        ExerciseParser parser = new ExerciseParser();
-
-        // Parse the JSON file and store the result in an ArrayList of Exercise objects
-        ArrayList<Exercise> loadedExercises = parser.parseExercise();
-
-        
-        if (loadedExercises != null) {
-            System.out.println("\nLoaded Exercises: ");
-            /*
-            loadedExercises.get(0).getID();
-            loadedExercises.get(0).getName();
-            loadedExercises.get(0).getForce();
-            loadedExercises.get(0).getLevel();
-            loadedExercises.get(0).getMechanic();
-            loadedExercises.get(0).getEquipment();
-            loadedExercises.get(0).getCategory();
-            loadedExercises.get(0).getPrimaryMuscles();
-            loadedExercises.get(0).getSecondaryMuscles();
-            loadedExercises.get(0).getInstructions();
-            
-            // Print the names of the loaded exercises
-            for (Exercise c : loadedExercises){
-                //c.displayExerciseInfo();
-                System.out.println(c.getName());
-            } // end for
-            */
-        } else {
-            System.out.println("Failed to load exercises");
-        } // end if
-    } // end main
-
     public ArrayList<Exercise> parseExercise(){        
         try {
 
@@ -75,5 +40,20 @@ public class ExerciseParser{
         } // end try-catch
     }
 
+    public static void main(String[] args) {
+        // for testing purposes
+        ExerciseParser parser = new ExerciseParser();
+        ArrayList<Exercise> exercises = parser.parseExercise();
+
+        if (exercises != null) {
+            System.out.println("Parsed " + exercises.size() + " exercises.");
+            for (Exercise exercise : exercises) {
+                System.out.println("Name: " + exercise.getName() + " " + exercises.indexOf(exercise));
+            } // end for
+        } else {
+            System.out.println("Failed to parse exercises.");
+        } // end if-else
+
+    } // end main
     
 } // end class

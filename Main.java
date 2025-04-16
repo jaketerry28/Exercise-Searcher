@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         ExerciseParser parser = new ExerciseParser();
         ArrayList<Exercise> exercises = parser.parseExercise();
-        DetailsGUI demo = new DetailsGUI(exercises.get(20));
+        DetailsGUI demo = new DetailsGUI(exercises.get(11));
         demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         demo.setVisible(true);
     } // end main

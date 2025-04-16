@@ -122,35 +122,42 @@ Gson provides ```TypeToken``` as a class for this situation. Gson docs state you
 
  
 
-## ExerciseGUI
+## GUI
 
-If possible, I'd want to present this information through a GUI. The ExerciseGui will retrieve the data stored in the ArrayList and present it in a clean manner. For now, I will focus on getting the information presented on commandline. If that works, then I will attempt a GUI.  
+I want to present this information through a GUI. The GUI will retrieve the data stored in the ArrayList and present it in a clean manner. There will be two GUIs, one that shows a detailed view of a single exercise, and another that will allow users to browse the ArrayList of exercise data.  
 
-#### Use Case
+### Use Case
 
 Load the GUI and have pages users can cycle through to explore data. Have an interactable button that when clicked, will give more detailed information about that specific exercise.
 
+#### DetailsGUI:  
+<img src="images/DetailedGUI.png" alt="UML" width="800" height="600">
+
+The build for the DetailsGUI will be composed of a BorderLayout with two BoxLayouts inside.  
+
+```pnlData``` will contain the Exercise JSON attributes and display them. I chose to use the JTextArea because the data for each exercise varies. Some have larger amounts of text than others. JTextArea supports text wrapping and so it is dynamic for resizing. This panel will be inserted into a JScrollPane in the event that the text is cut off. 
+
+```pnlImg``` will contain two images along a horizontal axis. I grab the images by getting the image url from the ```getImages()``` method inside the Exercise class. Concatenate that onto the end of the url and it will pull each image. In order to have the images fit inside the panel comfortably, resizing is done. I get the original image, then using the ```getScaledInstance()``` method, I can manually set the size of each image, then add it to the panel.    
+
+
+#### OverviewGUI
 Preferably, the GUI will be set up like this:  
 <img src="images/DisplayIdea.png" alt="UML" width="600" height="400">  
 
-If a user clicks on the button or name, use the Exercise class getter to grab the image String and call the URL through the link described above:
-<img src="images/DetailedGUI.png" alt="UML" width="600" height="400"> 
 
-
+I add both ```pnlData``` and ```pnlImg``` to a JSplitPane, to allow the user to adjust the spacing between both panels if they desire to.
 ## Milestones
 
-1. Define Exercise object class
-2. Get URL with JSON file.
-3. Parse JSON into a ArrayList<Exercise>.
-4. Read ArrayList<Exercise> into GUI interface.
-5. Present data.
+- [x] Define Exercise object class.  
+- [x] Get URL with JSON file.  
+- [x] Parse JSON into a ArrayList<Exercise>.  
+- [x] Read ArrayList<Exercise> into GUI interface.  
+- [x] Create Detailed GUI.  
+- [ ] Create Overview GUI. 
+- [ ] Create filtering methods. 
 
 ## Blackbelt 
 
 * SearchBy/filter function - ability to search by name, equipment, muscle groups, etc.
 * Workout planner - ability to select workouts to incorporate into a workout program.
 * Progression tracker - use serialization to track workouts done, weight lifted, max, etc.
-
-### Side Note
-
-For now, I really just want to focus on parsing the JSON files. The GUI would be nice to implement, but it is not the main focus of my project. If I can satisfy the parsing and storing of object instances in an ArrayList, I will realign my focus towards building a user-friendly GUI.
