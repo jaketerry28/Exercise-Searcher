@@ -16,6 +16,7 @@ public class Exercise{
     private List<String> secondaryMuscles;
     private List<String> instructions;
     private List<String> images;
+    private int exerciseIndex;
 
 
     public static void main(String[] args) {
@@ -105,6 +106,23 @@ public class Exercise{
     public void setImages(List<String> images) {
         this.images = images;
     }
+
+    //Override equals method to compare Exercise objects
+    @Override
+    public boolean equals(Object obj) {
+        // Check if the object is the same memory reference
+        if (this == obj){
+            return true;
+        }
+        // Check if the object is null or not of the same class
+        if (obj == null){
+            return false;
+        } // end if-else
+
+        // Check if the ids are the same
+        Exercise exercise = (Exercise) obj; // Cast the object to Exercise
+        return id.equals(exercise.id);
+    } // end equals
 
     // Method to display exercise information
     public void displayExerciseInfo() {
