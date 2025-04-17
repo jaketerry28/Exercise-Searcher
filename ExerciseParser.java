@@ -40,6 +40,8 @@ public class ExerciseParser{
         } // end try-catch
     } // end parseExercise
 
+    
+
     public static void main(String[] args) {
         // for testing purposes
         ExerciseParser parser = new ExerciseParser();

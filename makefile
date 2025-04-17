@@ -20,7 +20,13 @@ DetailsGUI.class: DetailsGUI.java
 	javac -g DetailsGUI.java
 
 DetailsGUI: DetailsGUI.class
-	java DetailsGUI	
+	java DetailsGUI
+
+OverviewGUI.class: OverviewGUI.java Exercise.class ExerciseParser.class DetailsGUI.class
+	javac -g -cp ".:libraries/gson-2.10.1.jar" OverviewGUI.java Exercise.java ExerciseParser.java DetailsGUI.java
+
+OverviewGUI: OverviewGUI.class
+	java -cp ".:libraries/gson-2.10.1.jar" OverviewGUI	
 
 
 clean:
