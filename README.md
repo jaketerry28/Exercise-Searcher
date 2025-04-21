@@ -1,4 +1,4 @@
-# FitSearch
+# Exercise Searcher
 Final Project Proposal CS 121
 
 FitSearch 
