@@ -133,19 +133,45 @@ Load the GUI and have pages users can cycle through to explore data. Have an int
 #### DetailsGUI:  
 <img src="images/DetailedGUI.png" alt="UML" width="800" height="600">
 
-The build for the DetailsGUI will be composed of a BorderLayout with two BoxLayouts inside.  
+Uses a GridLayout of 2 rows and 1 column. The exercise data will be at the top, with picture examples at the botom of the window.
 
 ```pnlData``` will contain the Exercise JSON attributes and display them. I chose to use the JTextArea because the data for each exercise varies. Some have larger amounts of text than others. JTextArea supports text wrapping and so it is dynamic for resizing. This panel will be inserted into a JScrollPane in the event that the text is cut off. 
 
-```pnlImg``` will contain two images along a horizontal axis. I grab the images by getting the image url from the ```getImages()``` method inside the Exercise class. Concatenate that onto the end of the url and it will pull each image. In order to have the images fit inside the panel comfortably, resizing is done. I get the original image, then using the ```getScaledInstance()``` method, I can manually set the size of each image, then add it to the panel.    
+```pnlImg``` will contain two images along a horizontal axis. I grab the images by getting the image url from the ```getImages()``` method inside the Exercise class. Concatenate that onto the end of the url and it will pull each image.  
 
+In order to have the images fit inside the panel comfortably, resizing is done. I get the original image, then use a ComponentListener to listen for window resizing. If it detects a resizing event, a scaleImage method is triggered. 
+
+* The scaledImage method dynamically resizes the images to match the size of the labels. Since not all the images in this database are the same size, I had to write a custom method that sizes the images based on their aspect ratio.  
+```
+int maxWidth = img1Lbl.getWidth(); // label width
+int maxHeight = img1Lbl.getHeight(); // label height
+
+-----------------------------
+private Image scaleImage(BufferedImage original, int maxWidth, int maxHeight) {
+  int originalWidth (of the image)
+  get originalHeight (of the image)
+
+  get double widthRatio from maxWidth / originalWidth
+  get double heightRatio from maxHeight/ originalHeight
+  determine which ratio is smaller and assign it to ratio
+  
+  int newWidth is originalWidth * ratio 
+  int newHeight is originalHeight * ratio
+
+  convert newWidth, newHeight from double to integer using casting.
+
+  scale original image with getScaledInstance method
+  
+  return scaled image
+}
+
+```
 
 #### OverviewGUI
 Preferably, the GUI will be set up like this:  
 <img src="images/DisplayIdea.png" alt="UML" width="600" height="400">  
 
-
-I add both ```pnlData``` and ```pnlImg``` to a JSplitPane, to allow the user to adjust the spacing between both panels if they desire to.
+The user selects an exercise from the list, then clicks the view details button. This will open a new window with the detailed view explained earlier. 
 ## Milestones
 
 - [x] Define Exercise object class.  
@@ -153,7 +179,7 @@ I add both ```pnlData``` and ```pnlImg``` to a JSplitPane, to allow the user to 
 - [x] Parse JSON into a ArrayList<Exercise>.  
 - [x] Read ArrayList<Exercise> into GUI interface.  
 - [x] Create Detailed GUI.  
-- [ ] Create Overview GUI. 
+- [x] Create Overview GUI. 
 - [ ] Create filtering methods. 
 
 ## Blackbelt 
@@ -161,3 +187,7 @@ I add both ```pnlData``` and ```pnlImg``` to a JSplitPane, to allow the user to 
 * SearchBy/filter function - ability to search by name, equipment, muscle groups, etc.
 * Workout planner - ability to select workouts to incorporate into a workout program.
 * Progression tracker - use serialization to track workouts done, weight lifted, max, etc.
+
+## After Action
+
+* GUI ARE HARD but I learned a lot.

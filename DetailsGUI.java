@@ -1,6 +1,5 @@
 // File: DetailsGUI.java
 
-// This program demonstrates the use of BoxLayout
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.event.*;
@@ -92,15 +91,15 @@ public class DetailsGUI extends JFrame {
 
         // Add listener for resizing events
         pnlImg.addComponentListener(new ComponentAdapter() {
-            @Override
+            @Override // Tells compiler this is an override of a method in the parent class
             public void componentResized(ComponentEvent e) {
-                int widht1 = img1Lbl.getWidth();
+                int width1 = img1Lbl.getWidth();
                 int height1 = img1Lbl.getHeight();
-                int widht2 = img2Lbl.getWidth();
+                int width2 = img2Lbl.getWidth();
                 int height2 = img2Lbl.getHeight();
 
-                Image scaledImage1 = scaleImage(img1, widht1, height1);
-                Image scaledImage2 = scaleImage(img2, widht2, height2);
+                Image scaledImage1 = scaleImage(img1, width1, height1);
+                Image scaledImage2 = scaleImage(img2, width2, height2);
         
                 img1Lbl.setIcon(new ImageIcon(scaledImage1));
                 img2Lbl.setIcon(new ImageIcon(scaledImage2));
@@ -129,12 +128,13 @@ public class DetailsGUI extends JFrame {
 
         double widthRatio = (double) maxWidth / originalWidth;
         double heightRatio = (double) maxHeight / originalHeight;
-        double ratio = Math.min(widthRatio, heightRatio);
+        double ratio = Math.min(widthRatio, heightRatio); // pick the smaller ratio
 
-        int newWidth = (int) (originalWidth * ratio);
-        int newHeight = (int) (originalHeight * ratio);
+        int newWidth = (int) (originalWidth * ratio); // convert double to int
+        int newHeight = (int) (originalHeight * ratio); // convert double to int
 
-        return originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        Image newImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        return newImage;
     } // end scaleImage
 
 } // end class def

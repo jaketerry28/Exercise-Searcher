@@ -31,6 +31,7 @@ public class OverviewGUI extends JFrame implements ActionListener {
         // Set the title and size of the window
         setTitle("Exercise Overview");
         setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pnlMain = this.getContentPane();
 
         // Set the layout manager for the main panel
@@ -69,10 +70,8 @@ public class OverviewGUI extends JFrame implements ActionListener {
         // Add an action listener to the button
         viewDetailsButton.addActionListener(this);
 
-        // Set the default close operation
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Set the visibility of the window
         setVisible(true);
+
     } // end init
 
     public void actionPerformed(ActionEvent e){

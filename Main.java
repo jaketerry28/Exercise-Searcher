@@ -28,23 +28,8 @@ public class Main {
         // Print the number of exercises parsed
         System.out.println("Parsed " + exercises.size() + " exercises.");
 
-        // Print the names of the first 10 exercises
-        for (Exercise exercise : exercises) {
-            int index = exercises.indexOf(exercise);
-            System.out.println(index);
-
-        } // end for
-
-        System.out.println("Enter the number of the exercise you want to view:");
-        int exerciseNumber = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-
         // Create an instance of OverviewGUI to display the exercise overview
-
-        // Test DetailsGUI with the 12th exercise
-        DetailsGUI demo = new DetailsGUI(exercises.get(exerciseNumber));
-        demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        demo.setVisible(true);
+        OverviewGUI overview = new OverviewGUI();
     } // end main
     
 } // end class Main
