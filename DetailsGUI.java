@@ -15,7 +15,8 @@ public class DetailsGUI extends JFrame {
     private JLabel img1Lbl = new JLabel("", SwingConstants.CENTER);
     private JLabel arrowLbl = new JLabel(" ==>  ", SwingConstants.CENTER); 
     private JLabel img2Lbl = new JLabel("" , SwingConstants.CENTER);
-    private Exercise exercise;   
+    private Exercise exercise;
+    private ResizeImage resizeImg;   
      
     public DetailsGUI(Exercise exercise) {
         init(exercise);
@@ -65,7 +66,7 @@ public class DetailsGUI extends JFrame {
         imgPanel.setBorder(BorderFactory.createTitledBorder("Example Images"));
 
         // To handle window resizing with images
-        ResizeImage resizeImg = new ResizeImage(img1Lbl, img2Lbl, img1, img2);
+        resizeImg = new ResizeImage(img1Lbl, img2Lbl, img1, img2);
         imgPanel.addComponentListener(resizeImg);
 
         // Add the images to the image panel

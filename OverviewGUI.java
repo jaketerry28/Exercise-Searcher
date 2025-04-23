@@ -100,6 +100,5 @@ public class OverviewGUI extends JFrame implements ActionListener {
             } // end if
         } // end if
     } // end actionPerformed
-
-
+    
 } // end class

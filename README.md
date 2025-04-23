@@ -12,7 +12,7 @@ Jake Terry, CS 121
 Many open-source exercise databases are in JSON format. The goal of this project is to convert JSON files into object instances, then store these objects in a data structure, such as an ArrayList. ArrayList will work well because we will not need to dynamically resize the ArrayList, I am not focused on adding elements to the ArrayList. An ArrayList will work to solve the main problem of this project -- converting JSON to objects, then presenting this information in a readable format.
 
 ## UML
-<img src="images/FitSearchUML.png" alt="UML" width="400" height="600">
+<img src="images/FitSearchUML.png" alt="UML" width="800" height="565">
 
 ## Open-Source Exercise DataBase
 
