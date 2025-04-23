@@ -39,9 +39,8 @@ public class OverviewGUI extends JFrame implements ActionListener {
         pnlMain.setLayout(new BorderLayout());
         pnlMain.setBackground(Color.LIGHT_GRAY);
 
-        // Create an instance of ExerciseParser to parse the JSON data
+        // Create an instance of ExerciseParser to store the JSON in exercises
         parser = new ExerciseParser();
-        // Parse the JSON data and get the list of exercises
         exercises = parser.parseExercise();
 
         // Check if the exercises were parsed successfully
@@ -50,24 +49,8 @@ public class OverviewGUI extends JFrame implements ActionListener {
             return;
         } // end if
 
-        // Create a column names for table
-        String[] columnNames = {"Name", "Primary Muscles", "Equipment"};
         // Create a table model to hold the exercise data
-        DefaultTableModel table = new DefaultTableModel(columnNames, 0);
-        // Create a JTable to display the exercise data
-        exerciseTable = new JTable(table);
-        // Set the table to be non-editable
-        exerciseTable.setDefaultEditor(Object.class, null);
-
-        // Fill table
-        for (Exercise exercise : exercises) {
-            Object[] row = new Object[3];
-            row[0] = exercise.getName();
-            row[1] = String.join(",", exercise.getPrimaryMuscles());
-            row[2] = exercise.getEquipment();
-            
-            table.addRow(row);
-        } // end for
+        createJTable();
 
         // Create a scroll pane for the table
         JScrollPane scrollPane = new JScrollPane(exerciseTable);    
@@ -81,7 +64,30 @@ public class OverviewGUI extends JFrame implements ActionListener {
 
     } // end init
 
+    public void createJTable(){
 
+        // Create a column names for table
+        String[] columnNames = {"Name", "Primary Muscles", "Equipment"};
+
+        // Create a table model to hold the exercise data
+        DefaultTableModel table = new DefaultTableModel(columnNames, 0);
+
+        // Create a JTable to display the exercise data
+        exerciseTable = new JTable(table);
+
+        // Set the table to be non-editable
+        exerciseTable.setDefaultEditor(Object.class, null);
+
+        // Fill table
+        for (Exercise exercise : exercises) {
+            Object[] row = new Object[3];
+            row[0] = exercise.getName();
+            row[1] = String.join(",", exercise.getPrimaryMuscles());
+            row[2] = exercise.getEquipment();
+            
+            table.addRow(row);
+        } // end for
+    } // end createJTable
 
     public void actionPerformed(ActionEvent e){
         Object theButton = e.getSource(); // Get the source of the event

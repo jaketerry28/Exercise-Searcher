@@ -12,12 +12,17 @@ public class DetailsGUI extends JFrame {
 
     private BufferedImage img1;
     private BufferedImage img2;
-    // Create labels for the images
     private JLabel img1Lbl = new JLabel("", SwingConstants.CENTER);
     private JLabel arrowLbl = new JLabel(" ==>  ", SwingConstants.CENTER); 
-    private JLabel img2Lbl = new JLabel("" , SwingConstants.CENTER);    
+    private JLabel img2Lbl = new JLabel("" , SwingConstants.CENTER);
+    private Exercise exercise;   
      
     public DetailsGUI(Exercise exercise) {
+        init(exercise);
+    } // end constructor
+
+    public void init(Exercise exercise) {
+        this.exercise = exercise; // Set the exercise object
          
         setTitle("Exercise Details");
         setSize(800, 600);
@@ -28,15 +33,12 @@ public class DetailsGUI extends JFrame {
         pnlMain.setLayout(new GridLayout(2,1)); 
         pnlMain.setBackground(Color.LIGHT_GRAY);
 
-        // Create a panel for the data
-        JPanel pnlData = new JPanel();
-        pnlData.setLayout(new BoxLayout(pnlData, BoxLayout.PAGE_AXIS));
-
-        JTextArea txtData = new JTextArea();
-        txtData.setLineWrap(true);
-        txtData.setWrapStyleWord(true);
-        txtData.setEditable(false);
-        txtData.setText(
+        // Creat a JTextArea for the exercise data
+        JTextArea exerciseData = new JTextArea();
+        exerciseData.setLineWrap(true);
+        exerciseData.setWrapStyleWord(true);
+        exerciseData.setEditable(false);
+        exerciseData.setText(
                 "NAME: " + exercise.getName() + "\n\n" +
                 "FORCE: " + exercise.getForce() + "\n\n" +
                 "LEVEL: " + exercise.getLevel() + "\n\n" +
@@ -48,17 +50,39 @@ public class DetailsGUI extends JFrame {
                 "INSTRUCTIONS: " + String.join(" ", exercise.getInstructions())
         );
 
-        // Add the labels to the data panel
-        pnlData.add(txtData);
 
         // Create a scroll pane for the data panel
-        JScrollPane dataScrollPane = new JScrollPane(pnlData);
+        JScrollPane dataScrollPane = new JScrollPane(exerciseData);
         dataScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        dataScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScrollPane.getVerticalScrollBar().setUnitIncrement(8);
-        dataScrollPane.getHorizontalScrollBar().setUnitIncrement(8);
 
-        // Load images from URLs
+        // Set the images using the method
+        setImages();
+    
+        // Create a 1 row, 2 col panel for the images
+        JPanel imgPanel = new JPanel();
+        imgPanel.setLayout(new GridLayout(1, 3));
+        imgPanel.setBorder(BorderFactory.createTitledBorder("Example Images"));
+
+        // To handle window resizing with images
+        ResizeImage resizeImg = new ResizeImage(img1Lbl, img2Lbl, img1, img2);
+        imgPanel.addComponentListener(resizeImg);
+
+        // Add the images to the image panel
+        imgPanel.add(img1Lbl);
+        imgPanel.add(arrowLbl);
+        imgPanel.add(img2Lbl);
+
+        // Add to the main panel
+        pnlMain.add(dataScrollPane);
+        pnlMain.add(imgPanel);
+        
+        this.setVisible(true);
+    } // end init
+
+    public void setImages(){
+
+        // Load and set images from URLs
         try {
             
             URL img1URL = new URL("https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/" + exercise.getImages().get(0));
@@ -79,27 +103,5 @@ public class DetailsGUI extends JFrame {
         } catch (Exception e) {
             System.out.println("Error loading images: " + e.getMessage());
         } // end try-catch
-    
-        // Create a panel for the images
-        JPanel pnlImg = new JPanel();
-        // 1 row, 3 columns
-        pnlImg.setLayout(new GridLayout(1, 3));
-        pnlImg.setBorder(BorderFactory.createTitledBorder("Example Images"));
-
-        // To handle window resizing with images
-        ResizeImage resizeImg = new ResizeImage(img1Lbl, img2Lbl, img1, img2);
-        pnlImg.addComponentListener(resizeImg);
-
-        // Add the images to the image panel
-        pnlImg.add(img1Lbl);
-        pnlImg.add(arrowLbl);
-        pnlImg.add(img2Lbl);
-
-        // Add to the main panel
-        pnlMain.add(dataScrollPane);
-        pnlMain.add(pnlImg);
-        
-        this.setVisible(true);
-    } // end constructor
-
+    }
 } // end class def
