@@ -1,8 +1,19 @@
-Main.class: Main.java Exercise.class ExerciseParser.class DetailsGUI.class
-	javac -g -cp ".:libraries/gson-2.10.1.jar" Main.java Exercise.java ExerciseParser.java DetailsGUI.java
+# Makefile 
 
-Main: Main.class
-	java -cp ".:libraries/gson-2.10.1.jar" Main
+run: OverviewGUI.class Exercise.class ExerciseParser.class DetailsGUI.class ResizeImage.class
+	java -cp ".:libraries/gson-2.10.1.jar" OverviewGUI
+
+OverviewGUI.class: OverviewGUI.java Exercise.class ExerciseParser.class DetailsGUI.class
+	javac -g -cp ".:libraries/gson-2.10.1.jar" OverviewGUI.java Exercise.java ExerciseParser.java DetailsGUI.java
+
+OverviewGUI: OverviewGUI.class
+	java -cp ".:libraries/gson-2.10.1.jar" OverviewGUI	
+
+DetailsGUI.class: DetailsGUI.java
+	javac -g DetailsGUI.java
+
+DetailsGUI: DetailsGUI.class
+	java DetailsGUI
 
 Exercise.class: Exercise.java
 	javac -g Exercise.java
@@ -15,19 +26,6 @@ ExerciseParser: ExerciseParser.class
 
 Exercise: Exercise.class
 	java Exercise
-
-DetailsGUI.class: DetailsGUI.java
-	javac -g DetailsGUI.java
-
-DetailsGUI: DetailsGUI.class
-	java DetailsGUI
-
-OverviewGUI.class: OverviewGUI.java Exercise.class ExerciseParser.class DetailsGUI.class
-	javac -g -cp ".:libraries/gson-2.10.1.jar" OverviewGUI.java Exercise.java ExerciseParser.java DetailsGUI.java
-
-OverviewGUI: OverviewGUI.class
-	java -cp ".:libraries/gson-2.10.1.jar" OverviewGUI	
-
 
 clean:
 	rm *.class

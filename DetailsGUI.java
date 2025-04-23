@@ -12,6 +12,10 @@ public class DetailsGUI extends JFrame {
 
     private BufferedImage img1;
     private BufferedImage img2;
+    // Create labels for the images
+    private JLabel img1Lbl = new JLabel("", SwingConstants.CENTER);
+    private JLabel arrowLbl = new JLabel(" ==>  ", SwingConstants.CENTER); 
+    private JLabel img2Lbl = new JLabel("" , SwingConstants.CENTER);    
      
     public DetailsGUI(Exercise exercise) {
          
@@ -20,7 +24,8 @@ public class DetailsGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Container pnlMain = this.getContentPane(); 
         
-        pnlMain.setLayout(new GridLayout(2,1)); // 2 row, 1 column
+        // 2 rows, 1 column
+        pnlMain.setLayout(new GridLayout(2,1)); 
         pnlMain.setBackground(Color.LIGHT_GRAY);
 
         // Create a panel for the data
@@ -53,14 +58,9 @@ public class DetailsGUI extends JFrame {
         dataScrollPane.getVerticalScrollBar().setUnitIncrement(8);
         dataScrollPane.getHorizontalScrollBar().setUnitIncrement(8);
 
-        // Create labels for the images
-        JLabel img1Lbl = new JLabel("", SwingConstants.CENTER);
-        JLabel arrowLbl = new JLabel(" ==>  ", SwingConstants.CENTER); 
-        JLabel img2Lbl = new JLabel("" , SwingConstants.CENTER);
-
-
+        // Load images from URLs
         try {
-            // Load images from URLs
+            
             URL img1URL = new URL("https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/" + exercise.getImages().get(0));
             URL img2URL = new URL("https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/" + exercise.getImages().get(1));
 
@@ -68,13 +68,9 @@ public class DetailsGUI extends JFrame {
             img1 = ImageIO.read(img1URL);
             img2 = ImageIO.read(img2URL);
 
-            // Initial scaled images 
-            Image scaledImg1 = img1.getScaledInstance(-1, -1, Image.SCALE_SMOOTH);
-            Image scaledImg2 = img2.getScaledInstance(-1, -1, Image.SCALE_SMOOTH);
-
-            // Create ImageIcons from the scaled images
-            ImageIcon icon1 = new ImageIcon(scaledImg1);
-            ImageIcon icon2 = new ImageIcon(scaledImg2);
+            // Create ImageIcons from the buffered images
+            ImageIcon icon1 = new ImageIcon(img1);
+            ImageIcon icon2 = new ImageIcon(img2);
             
             // Set the icons to the labels
             img1Lbl.setIcon(icon1);
@@ -83,30 +79,16 @@ public class DetailsGUI extends JFrame {
         } catch (Exception e) {
             System.out.println("Error loading images: " + e.getMessage());
         } // end try-catch
-
+    
         // Create a panel for the images
         JPanel pnlImg = new JPanel();
-        pnlImg.setLayout(new GridLayout(1, 2)); // 1 row, 2 columns
+        // 1 row, 3 columns
+        pnlImg.setLayout(new GridLayout(1, 3));
         pnlImg.setBorder(BorderFactory.createTitledBorder("Example Images"));
 
-        // Add listener for resizing events
-        pnlImg.addComponentListener(new ComponentAdapter() {
-            @Override // Tells compiler this is an override of a method in the parent class
-            public void componentResized(ComponentEvent e) {
-                int width1 = img1Lbl.getWidth();
-                int height1 = img1Lbl.getHeight();
-                int width2 = img2Lbl.getWidth();
-                int height2 = img2Lbl.getHeight();
-
-                Image scaledImage1 = scaleImage(img1, width1, height1);
-                Image scaledImage2 = scaleImage(img2, width2, height2);
-        
-                img1Lbl.setIcon(new ImageIcon(scaledImage1));
-                img2Lbl.setIcon(new ImageIcon(scaledImage2));
-
-               System.out.println("Resizing images...");
-            }
-        });
+        // To handle window resizing with images
+        ResizeImage resizeImg = new ResizeImage(img1Lbl, img2Lbl, img1, img2);
+        pnlImg.addComponentListener(resizeImg);
 
         // Add the images to the image panel
         pnlImg.add(img1Lbl);
@@ -118,23 +100,6 @@ public class DetailsGUI extends JFrame {
         pnlMain.add(pnlImg);
         
         this.setVisible(true);
-;
     } // end constructor
-    
-    // Method to scale image and maintain aspect ratio
-    private Image scaleImage(BufferedImage originalImage, int maxWidth, int maxHeight) {
-        int originalWidth = originalImage.getWidth();
-        int originalHeight = originalImage.getHeight();
-
-        double widthRatio = (double) maxWidth / originalWidth;
-        double heightRatio = (double) maxHeight / originalHeight;
-        double ratio = Math.min(widthRatio, heightRatio); // pick the smaller ratio
-
-        int newWidth = (int) (originalWidth * ratio); // convert double to int
-        int newHeight = (int) (originalHeight * ratio); // convert double to int
-
-        Image newImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        return newImage;
-    } // end scaleImage
 
 } // end class def
