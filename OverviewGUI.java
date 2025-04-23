@@ -1,6 +1,7 @@
 // File: OverviewGUI.java
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -15,7 +16,7 @@ public class OverviewGUI extends JFrame implements ActionListener {
 
     // Create a instance variables
     JButton viewDetailsButton = new JButton("View Details");
-    JList<String> exerciseList;
+    JTable exerciseTable;
     ExerciseParser parser;
     ArrayList<Exercise> exercises;
 
@@ -39,9 +40,9 @@ public class OverviewGUI extends JFrame implements ActionListener {
         pnlMain.setBackground(Color.LIGHT_GRAY);
 
         // Create an instance of ExerciseParser to parse the JSON data
-        this.parser = new ExerciseParser();
+        parser = new ExerciseParser();
         // Parse the JSON data and get the list of exercises
-        this.exercises = parser.parseExercise();
+        exercises = parser.parseExercise();
 
         // Check if the exercises were parsed successfully
         if (exercises == null) {
@@ -49,21 +50,27 @@ public class OverviewGUI extends JFrame implements ActionListener {
             return;
         } // end if
 
-        // Create a list to display exercise names
-        DefaultListModel<String> exerciseNames = new DefaultListModel<>();
+        // Create a column names for table
+        String[] columnNames = {"Name", "Primary Muscles", "Equipment"};
+        // Create a table model to hold the exercise data
+        DefaultTableModel table = new DefaultTableModel(columnNames, 0);
+        // Create a JTable to display the exercise data
+        exerciseTable = new JTable(table);
+        // Set the table to be non-editable
+        exerciseTable.setDefaultEditor(Object.class, null);
+
+        // Fill table
         for (Exercise exercise : exercises) {
-        exerciseNames.addElement(exercise.getName());
+            Object[] row = new Object[3];
+            row[0] = exercise.getName();
+            row[1] = String.join(",", exercise.getPrimaryMuscles());
+            row[2] = exercise.getEquipment();
+            
+            table.addRow(row);
         } // end for
 
-        // Create a JList to display the exercise names
-        exerciseList = new JList<>(exerciseNames);
-
-        // Allow only one selection at a time
-        exerciseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // Create a scroll pane for the list
-        JScrollPane scrollPane = new JScrollPane(exerciseList);    
-
+        // Create a scroll pane for the table
+        JScrollPane scrollPane = new JScrollPane(exerciseTable);    
         pnlMain.add(scrollPane, BorderLayout.CENTER);
         pnlMain.add(viewDetailsButton, BorderLayout.SOUTH); 
 
@@ -74,15 +81,19 @@ public class OverviewGUI extends JFrame implements ActionListener {
 
     } // end init
 
+
+
     public void actionPerformed(ActionEvent e){
         Object theButton = e.getSource(); // Get the source of the event
         if (theButton == viewDetailsButton) {
-            int index = exerciseList.getSelectedIndex();
-            if (index != -1){
-                Exercise selectedExercise = exercises.get(index);
+            int row = exerciseTable.getSelectedRow();
+            if (row != -1){
+                Exercise selectedExercise = exercises.get(row);
                 // Create an instance of DetailsGUI to display the exercise details
                 DetailsGUI detailsGUI = new DetailsGUI(selectedExercise);
             } // end if
         } // end if
-    }
+    } // end actionPerformed
+
+
 } // end class
