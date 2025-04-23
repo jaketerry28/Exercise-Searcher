@@ -15,10 +15,11 @@ import java.lang.reflect.Type;
 public class OverviewGUI extends JFrame implements ActionListener {
 
     // Create a instance variables
-    JButton viewDetailsButton = new JButton("View Details");
-    JTable exerciseTable;
-    ExerciseParser parser;
-    ArrayList<Exercise> exercises;
+    private JButton viewDetailsButton = new JButton("View Details");
+    private JTable exerciseTable;
+    private ExerciseParser parser;
+    private ArrayList<Exercise> exercises;
+    private DetailsGUI detailsGUI;
 
     public static void main(String[] args) {
         new OverviewGUI();
@@ -96,7 +97,7 @@ public class OverviewGUI extends JFrame implements ActionListener {
             if (row != -1){
                 Exercise selectedExercise = exercises.get(row);
                 // Create an instance of DetailsGUI to display the exercise details
-                DetailsGUI detailsGUI = new DetailsGUI(selectedExercise);
+                detailsGUI = new DetailsGUI(selectedExercise);
             } // end if
         } // end if
     } // end actionPerformed
